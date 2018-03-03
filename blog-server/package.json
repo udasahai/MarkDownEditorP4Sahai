@@ -1,0 +1,24 @@
+{
+  "name": "blog-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.18.2",
+    "commonmark": "^0.28.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "jsonwebtoken": "^8.2.0",
+    "mongodb": "^3.0.3",
+    "morgan": "~1.9.0",
+    "node-gyp": "^3.6.2",
+    "nodemon": "^1.17.1",
+    "serve-favicon": "~2.4.5"
+  }
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <% if(starter+5 < posts.length) { %>
+    <button id='next' type="button"><a href= '/<%=uName%>?start=<%=starter+5%>'>Next</a></button>
+    <% } %>
+    <ul>
+    <% var end = starter + 5; %>
+    <% for(let i = starter; i < end && i < posts.length; i++) { %>
+        <li>
+            <a href='<%= posts[i].postid %>'>
+                <%- posts[i].body %>
+            </a>
+        </li>
+    <% } %>
+	</ul>
+  </body>
+</html>
