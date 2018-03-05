@@ -27,26 +27,27 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.all('/api/:username/*', function (req, res, next) {
-	if(req.cookies.jwt == undefined){
-		console.log("Cookie Undfined");
-		res.sendStatus(401);
-	} 
-	else {
-		var token = req.cookies.jwt
-		jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
+// app.all('/api/:username/*', function (req, res, next) {
+//   next();
+// 	if(req.cookies.jwt == undefined){
+// 		console.log("Cookie Undfined");
+// 		res.sendStatus(401);
+// 	} 
+// 	else {
+// 		var token = req.cookies.jwt
+// 		jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
 				
-		  if (err) res.sendStatus(401);
-		  else if(decoded.usr != req.params.username) { 
-		  	res.sendStatus(401);
-		  }
-		  else {
-		   	console.log("Cookies: ",req.cookies.jwt);
-  			next();
-  			}
-		});
-	}
-});
+// 		  if (err) res.sendStatus(401);
+// 		  else if(decoded.usr != req.params.username) { 
+// 		  	res.sendStatus(401);
+// 		  }
+// 		  else {
+// 		   	console.log("Cookies: ",req.cookies.jwt);
+//   			next();
+//   			}
+// 		});
+// 	}
+// });
 
 app.use('/blog', index);
 app.use('/login', users);

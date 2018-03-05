@@ -30,7 +30,7 @@ if(condition) {
   		 {header: {"alg": "HS256","typ": "JWT"}, noTimestamp: true } , function(err, token) {
   			console.log(token);
   			console.log("past cookie");
-			res.cookie("jwt",token);
+			res.cookie("jwt",token);//.redirect("http://localhost:3000/edit");
 			res.redirect(req.query.redirect);
   			res.send("Great Login");
 		});		
