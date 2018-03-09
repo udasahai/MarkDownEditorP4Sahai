@@ -13,7 +13,7 @@
     <% var end = starter + 5; %>
     <% for(let i = starter; i < end && i < posts.length; i++) { %>
         <li>
-            <a href='<%= posts[i].postid %>'>
+            <a href='/blog/<%=uName%>/<%= posts[i].postid %>'>
                 <%- posts[i].body %>
             </a>
         </li>

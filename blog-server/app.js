@@ -24,30 +24,77 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.get('/edit', function(req, res, next){
+    if(req.cookies == undefined)
+    {
+      res.redirect("/login?redirect=/edit");
+      console.log("no cookies found");
+    }
+    else if(req.cookies.jwt == undefined){
+    res.redirect("/login?redirect=/edit");
+      console.log("jwt cookie found");
+  } 
+  else {
+    var token = req.cookies.jwt
+    jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
+        
+      if (err) {console.log("cookie error");res.redirect("/login?redirect=/edit");}
+      else {
+        console.log("Going ahead");
+        next();
+        }
+    });
+  }
+  
+  //next(); 
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// app.all('/api/:username/*', function (req, res, next) {
-//   next();
-// 	if(req.cookies.jwt == undefined){
-// 		console.log("Cookie Undfined");
-// 		res.sendStatus(401);
-// 	} 
-// 	else {
-// 		var token = req.cookies.jwt
-// 		jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
+app.all('/api/:username/*', function (req, res, next) {
+	if(req.cookies.jwt == undefined){
+		console.log("Cookie Undfined");
+		res.sendStatus(401);
+	} 
+	else {
+		var token = req.cookies.jwt
+		jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
 				
-// 		  if (err) res.sendStatus(401);
-// 		  else if(decoded.usr != req.params.username) { 
-// 		  	res.sendStatus(401);
-// 		  }
-// 		  else {
-// 		   	console.log("Cookies: ",req.cookies.jwt);
-//   			next();
-//   			}
-// 		});
-// 	}
-// });
+		  if (err) res.sendStatus(401);
+		  else if(decoded.usr != req.params.username) { 
+		  	res.sendStatus(401);
+		  }
+		  else {
+		   	console.log("Cookies: ",req.cookies.jwt);
+  			next();
+  			}
+		});
+	}
+});
+
+app.all('/api/:username', function (req, res, next) {
+  if(req.cookies.jwt == undefined){
+    console.log("Cookie Undfined");
+    res.sendStatus(401);
+  } 
+  else {
+    var token = req.cookies.jwt
+    jwt.verify(token, 'C-UFRaksvPKhx1txJYFcut3QGxsafPmwCY6SCly3G6c', function(err, decoded) {
+        
+      if (err) res.sendStatus(401);
+      else if(decoded.usr != req.params.username) { 
+        res.sendStatus(401);
+      }
+      else {
+        console.log("Cookies: ",req.cookies.jwt);
+        next();
+        }
+    });
+  }
+});
 
 app.use('/blog', index);
 app.use('/login', users);

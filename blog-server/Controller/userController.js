@@ -16,6 +16,11 @@ const saltRounds = 10;
  //  		console.log("The Password is stored as:" + hash);
 	// });
 
+    if(docs.length == 0)
+    {
+      callback(null);
+      return;
+    }
 
     bcrypt.compare(password, docs[0].password, function(err, res) {
     // res == true
